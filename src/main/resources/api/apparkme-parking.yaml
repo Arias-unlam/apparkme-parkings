@@ -1,0 +1,134 @@
+openapi: 3.0.2
+info:
+    title: apparkme-parkings
+    version: v1
+    description: Api con informacion de cocheras y playas de estacionamientos
+    contact:
+        name: Bruno Arias
+        email: bruno4ri4s@gmail.com
+paths:
+    /macons/apparkme/parkings/v1:
+        summary: v1
+        description: Api que gestiona los estacionamientos
+        get:
+            parameters:
+                -
+                    name: idUsuario
+                    description: Id de usuario
+                    schema:
+                        type: string
+                    in: query
+                    required: true
+                -
+                    name: Authorization
+                    description: Token para authentificacion
+                    schema:
+                        type: string
+                    in: header
+                    required: true
+            responses:
+                '200':
+                    $ref: '#/components/responses/ParkingResponse'
+            summary: v1
+            description: |
+                Obtiene los estacionamientos por usuario
+        post: {}
+components:
+    schemas:
+        Parking:
+            title: Root Type for Parking
+            description: 'Entidad estacionamiento '
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: Numero de identificacion del estacionamiento
+                    type: integer
+                user_id:
+                    format: int32
+                    description: Id del usuario perteneciente al estacionamiento
+                    type: integer
+                name:
+                    description: Nombre del estacionamiento
+                    type: string
+                address:
+                    description: Direccion con altura del estacionamiento
+                    type: string
+                city:
+                    description: Ciudad del estacionamiento
+                    type: string
+                country:
+                    description: Pais del estacionamiento
+                    type: string
+                latitude:
+                    description: Coordenada latitud
+                    type: string
+                longitude:
+                    description: Coordenada longitud
+                    type: string
+            example:
+                id: 1
+                user_id: 1
+                name: ' Garage Pepito'
+                address: ' Rivadavia 6500'
+                city: ' Buenos Aires'
+                country: ' Argentina'
+                latitude: ' -34.6272449'
+                longitude: ' -58.4598367'
+        ParkingRequest:
+            title: Root Type for ParkingRequest
+            description: Request para crear estacionamiento nuevo
+            type: object
+            properties:
+                user_id:
+                    format: int32
+                    type: integer
+                name:
+                    type: string
+                address:
+                    type: string
+                city:
+                    type: string
+                country:
+                    type: string
+                latitude:
+                    type: string
+                longitude:
+                    type: string
+            example:
+                user_id: 1
+                name: ' Garage Pepito'
+                address: ' Rivadavia 6500'
+                city: ' Buenos Aires'
+                country: ' Argentina'
+                latitude: ' -34.6272449'
+                longitude: ' -58.4598367'
+    responses:
+        ParkingResponse:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Parking'
+                    examples:
+                        ParkingResponse:
+                            value:
+                                Garages:
+                                    -
+                                        id: 1
+                                        user_id: 1
+                                        name: ' Garage Pepito'
+                                        address: ' Rivadavia 6500'
+                                        city: ' Buenos Aires'
+                                        country: ' Argentina'
+                                        latitude: ' -34.6272449'
+                                        longitude: ' -58.4598367'
+                                    -
+                                        id: 2
+                                        user_id: 1
+                                        name: ' Garage Pepito 2'
+                                        address: ' Rivadavia 7000'
+                                        city: ' Buenos Aires'
+                                        country: ' Argentina'
+                                        latitude: ' -34.6272449'
+                                        longitude: ' -58.4598367'
+            description: Response de estacionamiento
